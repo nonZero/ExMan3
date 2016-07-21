@@ -1,3 +1,15 @@
 from django.contrib import admin
 
-# Register your models here.
+from . import models
+
+
+class ExpenseAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'amount',
+        'created_at',
+        'id',
+    )
+
+
+admin.site.register(models.Expense, ExpenseAdmin)
