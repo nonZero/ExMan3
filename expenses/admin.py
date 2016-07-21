@@ -10,6 +10,13 @@ class ExpenseAdmin(admin.ModelAdmin):
         'created_at',
         'id',
     )
+    date_hierarchy = 'created_at'
+    search_fields = (
+        'title',
+        'amount',
+        'id',
+        'description',
+    )
 
 
 admin.site.register(models.Expense, ExpenseAdmin)
