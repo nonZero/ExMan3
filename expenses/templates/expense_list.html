@@ -2,7 +2,9 @@
 
     {% for object in object_list %}
         <li>
-            <b>{{ object.title }}</b>
+            <b>
+                <a href="{% url "expenses:detail" object.id %}">{{ object.title }}</a>
+            </b>
             ${{ object.amount }}
         </li>
     {% endfor %}

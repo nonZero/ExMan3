@@ -1,5 +1,7 @@
 import random
-from django.shortcuts import render
+
+from django.http.response import HttpResponseNotFound
+from django.shortcuts import render, get_object_or_404
 
 from . import models
 
@@ -13,4 +15,17 @@ def expense_list(request):
     # TODO: fix name to meet convention
     return render(request, "expense_list.html", {
         'object_list': qs,
+    })
+
+
+def expense_detail(request, id):
+    o = get_object_or_404(models.Expense, id=id)
+    # try:
+    #     o = models.Expense.objects.get(id=id)
+    # except models.Expense.DoesNotExist:
+    #     return HttpResponseNotFound("go away")
+
+    # TODO: fix name to meet convention
+    return render(request, "expense_detail.html", {
+        'object': o,
     })
