@@ -15,7 +15,22 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.http.response import HttpResponse
+
+
+def f(request):
+    # assert False, request.META['HTTP_USER_AGENT']
+    return HttpResponse("shalom shalom!")
+    # return HttpResponse("shalom shalom!", content_type="text/plain")
+    # return HttpResponse("shalom shalom!", status=404)
+
+
+def kuku_view(request, n):
+    return HttpResponse("KUKU! " + "*" * int(n))
+
 
 urlpatterns = [
+    url(r"^$", f),
+    url(r"^stars/([0-9]+)/$", kuku_view),
     url(r'^admin/', admin.site.urls),
 ]
