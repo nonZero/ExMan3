@@ -29,8 +29,28 @@ def kuku_view(request, n):
     return HttpResponse("KUKU! " + "*" * int(n))
 
 
+def calc(request, x, y):
+    return HttpResponse("{x} + {y} = {plus}<br/>{x} * {y} = {mul}".format(
+        x=x,
+        y=y,
+        mul=int(x) * int(y),
+        plus=int(x) + int(y),
+    ))
+
+def hello(request, age, name):
+    return HttpResponse("hello {}, you are {} years old.".format(
+        name.title(), age,
+    ))
+
+
 urlpatterns = [
     url(r"^$", f),
+
+    url(r"^hi/(?P<name>\w+)/(?P<age>[0-9]+)/$", hello),
+    url(r"^hi/(?P<age>[0-9]+)/(?P<name>\w+)/$", hello),
+    url(r"^hi/(?P<age>[0-9]+)/$", hello, kwargs={'name': 'Foo'}),
+
+    url(r"^calc/([0-9]+)/([0-9]+)/$", calc),
     url(r"^stars/([0-9]+)/$", kuku_view),
     url(r'^admin/', admin.site.urls),
 ]
