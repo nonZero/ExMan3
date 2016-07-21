@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseBadRequest
 
 
 def f(request):
@@ -37,10 +37,17 @@ def calc(request, x, y):
         plus=int(x) + int(y),
     ))
 
+
 def hello(request, age, name):
+    try:
+        repeat = int(request.GET.get('repeat', 1))
+    except ValueError:
+        repeat = 1
+        # return HttpResponseBadRequest("go fish")
+
     return HttpResponse("hello {}, you are {} years old.".format(
         name.title(), age,
-    ))
+    ) * repeat)
 
 
 urlpatterns = [
