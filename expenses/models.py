@@ -1,11 +1,12 @@
 import decimal
 
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
 
 
 class Expense(models.Model):
-    # id is automatic
+    user = models.ForeignKey(User, related_name='expenses')
     created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=300)
     amount = models.DecimalField(max_digits=10, decimal_places=2)

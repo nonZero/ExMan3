@@ -10,10 +10,10 @@
     ExMan3
     </h1>
 
-    <ul>
+    <ul class="list-group">
 
         {% for object in object_list %}
-            <li>
+            <li class="list-group-item">
                 <b>
                     <a href="{% url "expenses:detail" object.id %}">{{ object.title }}</a>
                 </b>
