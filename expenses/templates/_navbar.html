@@ -6,9 +6,19 @@
 
         <div class="collapse navbar-collapse"
              id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav pull-right">
+                {% if user.is_authenticated %}
+                    <li><p class="navbar-text">{{ user }}</p></li>
+                    <li><a href="{% url "logout" %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url "login" %}">Login</a></li>
+                {% endif %}
+            </ul>
             <ul class="nav navbar-nav">
                 <li><a href="{% url "expenses:create" %}">Create</a></li>
             </ul>
         </div>
     </div>
+
+
 </nav>

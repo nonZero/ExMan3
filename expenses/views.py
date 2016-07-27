@@ -2,6 +2,8 @@ import random
 
 from django import forms
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseNotFound
@@ -32,15 +34,50 @@ def contact_us_view(request):
     else:
         form = ContactUsForm()
 
-    return render(request, "contact_us_form.html", {
+    return render(request, "form.html", {
         'form': form,
     })
+
+
+# class LoginForm(forms.Form):
+#     username = forms.CharField()
+#     password = forms.CharField(widget=forms.PasswordInput())
+#
+#
+# def login_view(request):
+#     if request.method == "POST":
+#         form = LoginForm(request.POST)
+#
+#         if form.is_valid():
+#             user = authenticate(**form.cleaned_data)
+#             if user:
+#                 login(request, user)
+#                 return redirect(reverse("expenses:list"))
+#             form.add_error(None, "User / Password does not match")
+#
+#     else:
+#         form = LoginForm()
+#
+#     return render(request, "form.html", {
+#         'title': 'Login',
+#         'form': form,
+#     })
+
+
+# def logout_view(request):
+#     logout(request)
+#     messages.info(request, "bye bye!")
+#     return redirect(reverse("expenses:list"))
 
 
 # list: modelname_list
 # single: modelname_detail
 
+@login_required
 def expense_list(request):
+
+
+
     qs = models.Expense.objects.order_by('-created_at')
 
     # TODO: fix name to meet convention
@@ -49,6 +86,7 @@ def expense_list(request):
     })
 
 
+@login_required
 def expense_detail(request, id):
     o = get_object_or_404(models.Expense, id=id)
 
@@ -56,6 +94,7 @@ def expense_detail(request, id):
     return render(request, "expense_detail.html", {
         'object': o,
     })
+
 
 # class CreateExpenseView(CreateView):
 #     model = models.Expense
@@ -68,6 +107,7 @@ class ExpenseForm(forms.ModelForm):
         fields = '__all__'
 
 
+@login_required
 def expense_create_view(request):
     if request.method == "POST":
         form = ExpenseForm(request.POST)
@@ -83,7 +123,7 @@ def expense_create_view(request):
     else:
         form = ExpenseForm()
 
-    return render(request, "contact_us_form.html", {
+    return render(request, "form.html", {
         'title': "Create New Expense",
         'form': form,
     })

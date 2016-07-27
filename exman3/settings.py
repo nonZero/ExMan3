@@ -129,6 +129,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# LOGIN_URL = "expenses:login"
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "expenses:list"
+
 
 # TODO: next lines should be in dev only
 ADMINS = (
