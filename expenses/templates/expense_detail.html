@@ -1,4 +1,6 @@
 <h1><a href="{% url "expenses:list" %}">Expenses</a> &gt; {{ object.title }} ${{ object.amount }}</h1>
+
+    {{ object.amount_with_tax }}
 <div>
     {{ object.description|linebreaks }}
 </div>

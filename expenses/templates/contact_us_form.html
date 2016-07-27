@@ -1,0 +1,16 @@
+<form method="post" novalidate="1">
+
+    {% csrf_token %}
+
+    <ul>
+
+        {{ form.as_ul }}
+
+        <li>
+            <input type="submit" value="Send">
+        </li>
+
+    </ul>
+
+
+</form>
