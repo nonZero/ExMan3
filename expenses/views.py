@@ -7,12 +7,9 @@ from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView
-from django.views.generic import DeleteView
-from django.views.generic import DetailView
-from django.views.generic import ListView
-from django.views.generic import TemplateView
-from django.views.generic import UpdateView
+from django.utils.translation import gettext
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, \
+    TemplateView, UpdateView
 
 from . import models
 
@@ -100,7 +97,7 @@ class ExpenseCreateView(ExpenseViewMixin, CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         resp = super().form_valid(form)
-        messages.success(self.request, "Expense #{} added.".format(
+        messages.success(self.request, gettext("Expense #{} added.").format(
             form.instance.id
         ))
         return resp
@@ -121,7 +118,7 @@ class ExpenseDeleteView(ExpenseViewMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         id = self.get_object().id
         resp = super().delete(request, *args, **kwargs)
-        messages.success(self.request, "Expense #{} deleted.".format(
+        messages.success(self.request, gettext("Expense #{} deleted.").format(
             id
         ))
         return resp

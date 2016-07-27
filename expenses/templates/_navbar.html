@@ -1,7 +1,11 @@
+{% load i18n %}
+
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{% url "expenses:list" %}">ExMan3</a>
+            <a class="navbar-brand" href="{% url "expenses:list" %}">
+                {% trans "ExMan3" %}
+            </a>
         </div>
 
         <div class="collapse navbar-collapse"
@@ -9,13 +13,13 @@
             <ul class="nav navbar-nav pull-right">
                 {% if user.is_authenticated %}
                     <li><p class="navbar-text">{{ user }}</p></li>
-                    <li><a href="{% url "logout" %}">Logout</a></li>
+                    <li><a href="{% url "logout" %}">{% trans "Logout" %}</a></li>
                 {% else %}
-                    <li><a href="{% url "login" %}">Login</a></li>
+                    <li><a href="{% url "login" %}">{% trans "Login" %}</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav">
-                <li><a href="{% url "expenses:create" %}">Create</a></li>
+                <li><a href="{% url "expenses:create" %}">{% trans "Create" %}</a></li>
             </ul>
         </div>
     </div>
