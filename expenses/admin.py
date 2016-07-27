@@ -17,6 +17,10 @@ class ExpenseAdmin(admin.ModelAdmin):
         'id',
         'description',
     )
+    list_filter = (
+        'tags',
+    )
 
 
+admin.site.register(models.Tag)
 admin.site.register(models.Expense, ExpenseAdmin)

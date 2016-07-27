@@ -1,0 +1,9 @@
+{% extends "form.html" %}
+
+{% block title %}
+    {% if form.instance.id %}
+        Edit {{ object.title }}
+    {% else %}
+        Add a new expense
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock %}
+
+{% block content %}
+
+    <h1><a href="{% url "expenses:list" %}">Expenses</a>
+        &gt; {{ object.title }} ${{ object.amount }}</h1>
+
+    {{ object.amount_with_tax }}
+    <div>
+        {{ object.description|linebreaks }}
+    </div>
+    {% for tag in object.tags.all %}
+        <div class="badge badge-default">
+        {{ tag }}
+        </div>
+    {% endfor %}
+
+    <a class="btn btn-primary" href="{% url "expenses:update" object.id %}">
+        <i class="glyphicon glyphicon-pencil"></i>
+        Edit
+    </a>
+    <a class="btn btn-danger" href="{% url "expenses:delete" object.id %}">
+        <i class="glyphicon glyphicon-trash"></i>
+        Delete
+    </a>
+
+{% endblock %}
