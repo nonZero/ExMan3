@@ -57,6 +57,10 @@ def expense_detail(request, id):
         'object': o,
     })
 
+# class CreateExpenseView(CreateView):
+#     model = models.Expense
+#     fields = '__all__'
+
 
 class ExpenseForm(forms.ModelForm):
     class Meta:
@@ -73,11 +77,13 @@ def expense_create_view(request):
             messages.success(request, "Expense #{} added.".format(
                 form.instance.id
             ))
-            return redirect(reverse("expenses:list"))
+            return redirect(form.instance)
+            # return redirect(reverse("expenses:list"))
 
     else:
         form = ExpenseForm()
 
     return render(request, "contact_us_form.html", {
+        'title': "Create New Expense",
         'form': form,
     })

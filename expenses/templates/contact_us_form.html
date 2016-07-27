@@ -1,16 +1,26 @@
-<form method="post" novalidate="1">
+{% extends "base.html" %}
+{% load bootstrap3 %}
 
-    {% csrf_token %}
-
-    <ul>
-
-        {{ form.as_ul }}
-
-        <li>
-            <input type="submit" value="Send">
-        </li>
-
-    </ul>
+{% block title %}
+    {{ object.title }}
+{% endblock %}
 
 
-</form>
+
+{% block content %}
+
+    <h1>
+        {{ title }}
+    </h1>
+
+    <form method="post" novalidate="1">
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Submit
+            </button>
+        {% endbuttons %}
+    </form>
+{% endblock %}

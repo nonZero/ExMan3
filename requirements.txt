@@ -1,5 +1,7 @@
+coverage==4.2
 decorator==4.0.10
 Django==1.9.8
+django-bootstrap3==7.0.1
 django-extensions==1.6.7
 inflect==0.2.5
 ipython==5.0.0

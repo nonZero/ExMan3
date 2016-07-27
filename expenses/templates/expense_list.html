@@ -1,25 +1,27 @@
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %}
-                class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% extends "base.html" %}
+
+{% block title %}
+    Expense List
+{% endblock %}
+
+{% block content %}
+
+    <h1>
+    ExMan3
+    </h1>
+
+    <ul>
+
+        {% for object in object_list %}
+            <li>
+                <b>
+                    <a href="{% url "expenses:detail" object.id %}">{{ object.title }}</a>
+                </b>
+                ${{ object.amount }}
+            </li>
         {% endfor %}
+
     </ul>
 
-{% endif %}
-
-<ul>
-
-    {% for object in object_list %}
-        <li>
-            <b>
-                <a href="{% url "expenses:detail" object.id %}">{{ object.title }}</a>
-            </b>
-            ${{ object.amount }}
-        </li>
-    {% endfor %}
-
-</ul>
-
-
+{% endblock %}
 
