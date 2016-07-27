@@ -5,12 +5,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, \
     TemplateView, UpdateView
 
+from expenses.forms import CommentForm
 from . import models
 
 
@@ -65,32 +67,24 @@ class ExpenseListView(ExpenseViewMixin, ListView):
     paginate_by = 10
 
 
-# assert False, ExpenseListView.mro()
-
-# @login_required
-# def expense_list(request):
-#     # qs = models.Expense.objects.filter(user=request.user).order_by('-created_at')
-#     qs = request.user.expenses.order_by('-created_at')
-#
-#     # TODO: fix name to meet convention
-#     return render(request, "expense_list.html", {
-#         'object_list': qs,
-#     })
-
 class ExpenseDetailView(ExpenseViewMixin, DetailView):
-    pass
+    def comment_form(self):
+        return CommentForm()
 
-
-# @login_required
-# def expense_detail(request, id):
-#     o = get_object_or_404(models.Expense, id=id, user=request.user)
-#     # o = get_object_or_404(request.user.expenses, id=id)
-#
-#     # TODO: fix name to meet convention
-#     return render(request, "expense_detail.html", {
-#         'object': o,
-#     })
-#
+    def post(self, request, pk):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        if not form.is_valid():
+            if not request.is_ajax():
+                return redirect(self.object)
+            return HttpResponseBadRequest("bad form")
+        form.instance.expense = self.object
+        comment = form.save()
+        if not request.is_ajax():
+            return redirect(self.object)
+        return render(request, "expenses/_comment.html", {
+            'comment': comment,
+        })
 
 
 class ExpenseCreateView(ExpenseViewMixin, CreateView):

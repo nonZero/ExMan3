@@ -1,5 +1,6 @@
 import decimal
 
+import markdown
 from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.auth.models import User
@@ -47,6 +48,21 @@ class Expense(models.Model):
 
     def amount_with_tax(self):
         return self.amount * decimal.Decimal("1.17")
+
+    def latest_comments(self):
+        return self.comments.order_by('-created_at')
+
+
+class Comment(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    expense = models.ForeignKey(Expense, related_name="comments")
+    body_markdown = models.TextField(_("comment"))
+    body_html = models.TextField(editable=False)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.body_html = markdown.markdown(self.body_markdown)
+        super().save(force_insert, force_update, using, update_fields)
 
 # class ExpenseTag(models.Model):
 #     created_at = models.DateTimeField(auto_now_add=True)

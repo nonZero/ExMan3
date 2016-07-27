@@ -8,12 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 
-{% if bidi %}
-    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap-rtl.css" %}"/>
-{% else %}
-    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.css" %}"/>
+    {% if bidi %}
+        <link rel="stylesheet"
+              href="{% static "bootstrap/css/bootstrap-rtl.css" %}"/>
+    {% else %}
+        <link rel="stylesheet"
+              href="{% static "bootstrap/css/bootstrap.css" %}"/>
 
-{% endif %}
+    {% endif %}
     <link rel="stylesheet" href="{% static "main.css" %}"/>
 
     <title>
@@ -25,7 +27,7 @@
     </title>
 
 </head>
-<body {% if bidi%}dir="rtl"{% endif %}>
+<body {% if bidi %}dir="rtl"{% endif %}>
 
 <div class="container">
 
@@ -41,6 +43,10 @@
 
 <script src="{% static "jquery-3.1.0.js" %}"></script>
 <script src="{% static "bootstrap/js/bootstrap.js" %}"></script>
+<script src="{% static "csrf.js" %}"></script>
+
+{% block scripts %}
+{% endblock %}
 
 </body>
 </html>

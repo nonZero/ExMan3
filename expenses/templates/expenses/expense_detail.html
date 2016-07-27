@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n bootstrap3 staticfiles %}
 
 {% block title %}
     {{ object.title }}
@@ -16,7 +16,7 @@
     </div>
     {% for tag in object.tags.all %}
         <div class="badge badge-default">
-        {{ tag }}
+            {{ tag }}
         </div>
     {% endfor %}
 
@@ -29,4 +29,29 @@
         Delete
     </a>
 
+    <hr>
+
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form view.comment_form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "save" %} {% blocktrans %}Add
+                Comment{% endblocktrans %}
+            </button>
+        {% endbuttons %}
+
+    </form>
+
+    <ul class="list-group" id="comments">
+        {% for comment in object.latest_comments %}
+            {% include "expenses/_comment.html" %}
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "expenses/expense_detail.js" %}"></script>
 {% endblock %}
