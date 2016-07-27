@@ -1,3 +1,5 @@
+import decimal
+
 from django.db import models
 
 
@@ -14,3 +16,6 @@ class Expense(models.Model):
             self.title,
             self.amount,
         )
+
+    def amount_with_tax(self):
+        return self.amount * decimal.Decimal("1.17")
